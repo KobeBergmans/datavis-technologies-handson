@@ -1,4 +1,6 @@
 <script>
+    import { scaleLog } from 'd3-scale';
+
     // Dimensions
     const width = 800;
     const height = 100;
@@ -8,11 +10,16 @@
   
     // Array
     const values = [2, 4, 6, 7, 9];
+
+    // Scale
+    const scale = scaleLog().domain([1, 10]).range([0, innerWidth]);
   </script>
   
   <svg viewBox="0 0 {width} {height}">
     <g transform="translate({margin.left},{margin.top})">
-      <!--  -->
+      {#each values as item}
+        <circle cx={scale(item)} cy={innerHeight / 2} r="10"/>
+      {/each}
     </g>
   </svg>
   
