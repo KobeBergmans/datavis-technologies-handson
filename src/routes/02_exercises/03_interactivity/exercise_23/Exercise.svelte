@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from "svelte";
+
     // Dimensions
     const width = 800;
     const height = 100;
@@ -20,11 +22,29 @@
   
     // Color
     let color = "darkred";
+
+    // When data is loaded we start the countdown
+    onMount(async () => {
+      let interval = setInterval(() => {
+        if (index > 0) {
+          index -= 1;
+        } else {
+          color = "darkgreen";
+          clearInterval(interval);
+        }
+      }, 500)
+    });
   </script>
   
   <svg viewBox="0 0 {width} {height}">
     <g transform="translate({margin.left},{margin.top})">
-      <!--  -->
+      {#each points as point, i}
+        {#if i >= index}
+          <circle cx={point} cy={innerHeight/2} r={15} opacity={1} fill={color}/>
+        {:else}
+          <circle cx={point} cy={innerHeight/2} r={15} opacity={0.3} fill={color}/>
+        {/if}
+      {/each}
     </g>
   </svg>
   
